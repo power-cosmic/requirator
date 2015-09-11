@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="../requirator.js"></script>
+  </head>
+  <body>
+    <h1>Require Test</h1>
+    <p>
+      Check the console and source code.
+    </p>
+    <script>
+
+      config({
+        baseUrl: 'modules'
+      })
+
+      // demo of functionality with no dependencies
+      module([], function() {
+        console.log('hello world');
+      });
+
+      // demo of functionality with a dependency.
+      // basicModule.js has no dependencies
+      module(['basicModule.js'], function(basicModule) {
+        console.log('basicModule:', basicModule);
+      });
+
+      // demo where the dependency has dependencies
+      module(['b.js'], function(b) {
+        console.log('with dependencies:', b);
+      })
+
+      // demo where d
+      module(['equation.js'], function(equation) {
+        console.log('equation:', equation(7));
+      });
+
+      // demo of circular dependencies not working or notifying the user :(
+      module(['circularA.js', 'circularB.js'], function(a, b) {
+        console.log("CIRCULAR LOADED:", a, b);
+      });
+
+    </script>
+  </body>
+</html>
