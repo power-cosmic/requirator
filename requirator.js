@@ -8,7 +8,7 @@
     configuration = {
       baseUrl: ''
     },
-    enabled = {},
+    foundModuleOrDefinition,
     dependencyListeners = {},
     loadStack = [],
 
@@ -27,6 +27,7 @@
     },
 
     moduleDefine = function(dependencies, fn, name) {
+      foundModuleOrDefinition = true;
       if (areLoaded(dependencies)) {
         register(dependencies, fn, name);
       } else {
@@ -96,7 +97,7 @@
 
     areLoaded = function(dependencies) {
       for (var i = 0; i < dependencies.length; i++) {
-        if (!modules[dependencies[i]]) {
+        if (modules[dependencies[i]] === undefined) {
           return false;
         }
       }
@@ -127,9 +128,22 @@
     },
 
     moduleLoaded = function(path, content) {
+
+      // data to be picked up if the file is actually a module
       loadStack.push(path);
+      foundModuleOrDefinition = false;
+
+      // run the module code
       eval(content);
       loadStack.pop();
+
+      if (!foundModuleOrDefinition) {
+        console.warn(path, 'isn\'t a module');
+        modules[path] = null;
+        if (dependencyListeners[path]) {
+          notifyListeners(dependencyListeners[path]);
+        }
+      }
     };
 
 

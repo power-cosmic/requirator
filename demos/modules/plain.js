@@ -1,1 +1,1 @@
-console.log('This doesn\' use define or require. It\'s just console.logging');
+console.log('This doesn\'t use define or require. It\'s just console.logging');
