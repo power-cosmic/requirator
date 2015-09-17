@@ -170,6 +170,10 @@
    *      are loaded.
    */
   define = function(dependencies, fn) {
+    if (typeof dependencies === 'function') {
+      fn = dependencies;
+      dependencies = [];
+    }
     var name = loadStack[loadStack.length - 1];
     moduleDefine(dependencies, fn, name);
   };
