@@ -10,6 +10,7 @@
     },
     foundModuleOrDefinition,
     dependencyListeners = {},
+    dependentListeners = {},
     loadStack = [],
 
     register = function(dependencies, fn, name) {
@@ -46,6 +47,8 @@
           name: name
         }
 
+        dependentListeners[name] = dependencies;
+
         for (var i = dependencies.length - 1; i >= 0; i--) {
           var dependency = dependencies[i];
 
@@ -75,7 +78,27 @@
             }
           }
         }
+        if (hasCircularDependency(dependencies, name)) {
+          // reset data and throw error
+          removeReferences(name);
+          throw new Error('Circular dependency identified for ' + name
+              + '; unable to load dependents');
+        }
       }
+    },
+
+    removeReferences = function(name) {
+      modules[name] = null;
+      var dependencies = dependencyListeners[name];
+      for (var i = dependencies.length - 1; i >= 0; i--) {
+        for (var j = dependencies[i].dependencies.length - 1; j >= 0; j--) {
+          if (dependencies[i].dependencies[j] === name) {
+            dependencies[i].dependencies.splice(j, 1);
+          }
+        }
+      }
+
+      delete dependentListeners[name];
     },
 
     notifyListeners = function(listeners) {
@@ -108,6 +131,23 @@
       }
       return true;
     },
+
+    hasCircularDependency = function(dependencies, name) {
+      dependencies = dependencies || [];
+
+      for (var i = 0; i < dependencies.length; i++) {
+
+        if (dependencies[i] === name) {
+          return true;
+        }
+        if (hasCircularDependency(dependentListeners[dependencies[i]], name)) {
+          return true;
+        }
+      }
+
+      return false;
+    },
+
     loadFile = function(method, url, callback) {
       var xmlhttp = new XMLHttpRequest();
 
@@ -143,7 +183,7 @@
       loadStack.pop();
 
       if (!foundModuleOrDefinition) {
-        console.warn(path, 'isn\'t a module');
+        console.warn(path + ' isn\'t a module');
         modules[path] = null;
         if (dependencyListeners[path]) {
           notifyListeners(dependencyListeners[path]);

@@ -36,9 +36,9 @@
         console.log('equation:', equation(7));
       });
 
-      // demo of circular dependencies not working or notifying the user :(
+      // demo of circular dependencies throwing an error
       require(['circularA.js', 'circularB.js'], function(a, b) {
-        console.log("CIRCULAR LOADED:", a, b);
+        console.log('This won\'t show up');
       });
 
     </script>
