@@ -31,7 +31,7 @@
         fn = dependencies;
         dependencies = [];
       }
-      
+
       foundModuleOrDefinition = true;
       if (areLoaded(dependencies)) {
         register(dependencies, fn, name);
@@ -162,7 +162,7 @@
    * @param {Function} fn Function to be called when dependencies
    *      are loaded.
    */
-  module = function(dependencies, fn) {
+  require = function(dependencies, fn) {
     loadStack.pop();
     moduleDefine(dependencies, fn);
   };
