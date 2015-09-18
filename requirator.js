@@ -27,6 +27,11 @@
     },
 
     moduleDefine = function(dependencies, fn, name) {
+      if (typeof dependencies === 'function') {
+        fn = dependencies;
+        dependencies = [];
+      }
+      
       foundModuleOrDefinition = true;
       if (areLoaded(dependencies)) {
         register(dependencies, fn, name);
