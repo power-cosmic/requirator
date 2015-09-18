@@ -1,16 +1,12 @@
 (function() {
 
-  /*************************************************
-   * Variables and functions hidden by the closure *
-   ************************************************/
-
   var modules = {},
     configuration = {
       baseUrl: ''
     },
     foundModuleOrDefinition,
     dependencyListeners = {},
-    dependentListeners = {},
+    dependenciesFor = {},
     loadStack = [],
 
     register = function(dependencies, fn, name) {
@@ -27,7 +23,7 @@
       return mod;
     },
 
-    moduleDefine = function(dependencies, fn, name) {
+    createModule = function(dependencies, fn, name) {
       if (typeof dependencies === 'function') {
         fn = dependencies;
         dependencies = [];
@@ -47,7 +43,7 @@
           name: name
         }
 
-        dependentListeners[name] = dependencies;
+        dependenciesFor[name] = dependencies;
 
         for (var i = dependencies.length - 1; i >= 0; i--) {
           var dependency = dependencies[i];
@@ -98,7 +94,7 @@
         }
       }
 
-      delete dependentListeners[name];
+      delete dependenciesFor[name];
     },
 
     notifyListeners = function(listeners) {
@@ -140,7 +136,7 @@
         if (dependencies[i] === name) {
           return true;
         }
-        if (hasCircularDependency(dependentListeners[dependencies[i]], name)) {
+        if (hasCircularDependency(dependenciesFor[dependencies[i]], name)) {
           return true;
         }
       }
@@ -164,6 +160,7 @@
       };
       xmlhttp.send();
     },
+
     load = function(path) {
       loadFile('GET', path, function(response) {
         if (response.status === 200) {
@@ -191,11 +188,6 @@
       }
     };
 
-
-  /*************************
-   * Global functions      *
-   ************************/
-
   /**
    * Create an anonymous module.
    * @param {Array} dependencies Array of dependency paths
@@ -204,7 +196,7 @@
    */
   require = function(dependencies, fn) {
     loadStack.pop();
-    moduleDefine(dependencies, fn);
+    createModule(dependencies, fn);
   };
 
   /**
@@ -216,7 +208,7 @@
    */
   define = function(dependencies, fn) {
     var name = loadStack[loadStack.length - 1];
-    moduleDefine(dependencies, fn, name);
+    createModule(dependencies, fn, name);
   };
 
   /**
