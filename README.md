@@ -24,7 +24,8 @@ define([], function() {
     favoriteManaColor: 'black'
   };
 });
-
+```
+```javacript
 // log the module defined by basicModule.js
 require(['basicModule.js'], function(basicModule) {
   console.log(basicModule.name);
