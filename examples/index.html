@@ -12,18 +12,19 @@
     <script>
 
       config({
-        baseUrl: 'modules'
+        baseUrl: 'modules',
+        plugins: {
+          text: 'plugins/text'
+        }
       })
 
-      // demo of functionality with no dependencies
-      require(function() {
-        console.log('hello world');
-      });
-
-      // demo of functionality with a dependency.
-      // basicModule has no dependencies
+      // // basicModule has no dependencies
       require(['basicModule'], function(basicModule) {
         console.log('basicModule:', basicModule);
+      });
+
+      require(['text!test.txt'], function(text) {
+        console.log('loaded text:',text);
       });
 
       // demo where the dependency has dependencies
