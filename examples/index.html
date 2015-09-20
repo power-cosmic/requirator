@@ -13,18 +13,11 @@
 
       config({
         baseUrl: 'modules',
-        plugins: {
-          text: 'plugins/text'
-        }
-      })
+      });
 
       // // basicModule has no dependencies
       require(['basicModule'], function(basicModule) {
         console.log('basicModule:', basicModule);
-      });
-
-      require(['text!test.txt'], function(text) {
-        console.log('loaded text:',text);
       });
 
       // demo where the dependency has dependencies
