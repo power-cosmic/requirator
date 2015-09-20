@@ -1,3 +1,3 @@
-define(['modules/b.js'], function(b) {
+define(['modules/b'], function(b) {
   return 'success';
 });

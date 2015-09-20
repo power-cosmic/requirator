@@ -21,23 +21,23 @@
       });
 
       // demo of functionality with a dependency.
-      // basicModule.js has no dependencies
-      require(['basicModule.js'], function(basicModule) {
+      // basicModule has no dependencies
+      require(['basicModule'], function(basicModule) {
         console.log('basicModule:', basicModule);
       });
 
       // demo where the dependency has dependencies
-      require(['b.js'], function(b) {
+      require(['b'], function(b) {
         console.log('with dependencies:', b);
       })
 
       // demo where d
-      require(['equation.js'], function(equation) {
+      require(['equation'], function(equation) {
         console.log('equation:', equation(7));
       });
 
       // demo of circular dependencies throwing an error
-      require(['circularA.js', 'circularB.js'], function(a, b) {
+      require(['circularA', 'circularB'], function(a, b) {
         console.log('This won\'t show up');
       });
 

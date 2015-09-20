@@ -1,3 +1,3 @@
-define(['circularB.js'], function(b) {
+define(['circularB'], function(b) {
   return 'a';
 });

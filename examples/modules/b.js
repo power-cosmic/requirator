@@ -1,4 +1,4 @@
-define(['c.js', 'd.js'], function(c, d) {
+define(['c', 'd'], function(c, d) {
   return {
     c: c,
     d: d

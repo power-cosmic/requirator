@@ -1,3 +1,3 @@
-define(['plain.js'], function(plain) {
+define(['plain'], function(plain) {
   return 'DDD';
 });
