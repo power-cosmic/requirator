@@ -12,7 +12,7 @@
     "man": "./man"
   },
   "scripts": {
-    "test": "istanbul cover _mocha tests",
+    "test": "",
     "preversion": "npm test",
     "postversion": "git push --tags"
   },
