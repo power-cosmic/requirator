@@ -12,9 +12,9 @@
     "man": "./man"
   },
   "scripts": {
-    "test": "",
+    "test": "_mocha tests",
     "preversion": "npm test",
-    "postversion": "git push --tags"
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
@@ -31,7 +31,8 @@
   },
   "homepage": "https://github.com/power-cosmic/requirator#readme",
   "devDependencies": {
-    "ajaxer": "https://github.com/power-cosmic/ajaxer.git",
+    "ajaxer": "git+https://github.com/power-cosmic/ajaxer.git",
+    "ajaxer-fs": "git+https://github.com/power-cosmic/ajaxer-fs.git",
     "chai": "^3.2.0",
     "coveralls": "^2.11.4",
     "grunt": "^0.4.5",

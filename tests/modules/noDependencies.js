@@ -1,3 +1,5 @@
 define(function() {
-  return 'Hello world';
+  return {
+      phrase: 'hello world'
+  }
 });
