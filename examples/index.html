@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <script src="../node_modules/ajaxer/lib/ajaxer.js"></script>
     <script src="../lib/requirator.js"></script>
   </head>
   <body>
@@ -11,7 +12,9 @@
     </p>
     <script>
 
+    console.log(this.ajaxer);
       config({
+        ajax: ajaxer,
         baseUrl: 'modules',
       });
 
@@ -34,7 +37,7 @@
       require(['circularA', 'circularB'], function(a, b) {
         console.log('This won\'t show up');
       });
-
+      console.log(ajaxer);
     </script>
   </body>
 </html>
