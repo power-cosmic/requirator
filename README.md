@@ -1,5 +1,7 @@
 # requirator
 
+[![Build Status](https://travis-ci.org/power-cosmic/requirator.svg?branch=master)](https://travis-ci.org/power-cosmic/requirator)
+
 ## Overview
 
 A library to mimic much of the functionality of jrburke's [requirejs](https://github.com/jrburke/requirejs). This was written for a graduate class in which we were encouraged to use only code we developed.
