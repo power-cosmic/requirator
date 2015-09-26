@@ -2,14 +2,11 @@ var require = require || null;
 var chai = chai || null;
 var _require = require;
 
-var test = function(path, ajaxer) {
+var test = function(configuration) {
 
   var expect = chai.expect;
 
-  config({
-    baseUrl: path,
-    ajax: ajaxer
-  });
+  config(configuration);
 
   describe('requirator', function() {
     it('should load a module with no dependencies provided', function(done) {
@@ -29,6 +26,13 @@ var test = function(path, ajaxer) {
 
     });
 
+    it('should use paths', function(done) {
+      require(['scripts/basicModule'], function(basicModule) {
+        expect(basicModule).to.be.a('string');
+        done();
+      });
+    });
+
   });
 };
 
@@ -43,14 +47,28 @@ if (require) {
    var req = fs.readFileSync('./lib/requirator.js').toString();
    eval(req);
 
-   test('./tests/', fsAjaxer);
+   test({
+     baseUrl: './tests/',
+     ajax: fsAjaxer,
+     paths: {
+       'img/': './tests/modules/img',
+       'scripts/': './examples/modules'
+     }
+   });
 } else {
 
   // running in test_runner.html
 
    ajaxer.get('../lib/requirator.js', '', function(data) {
      eval(data);
-     test('./', ajaxer);
+     test({
+       baseUrl: './',
+       ajax: ajaxer,
+       paths: {
+         'img/': './modules/img',
+         'scripts/': '../examples/modules'
+       }
+     });
      mocha.run();
    });
 
