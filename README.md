@@ -27,7 +27,7 @@ define([], function() {
   };
 });
 ```
-```javacript
+```javascript
 // log the module defined by basicModule.js
 require(['basicModule.js'], function(basicModule) {
   console.log(basicModule.name);
