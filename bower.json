@@ -1,0 +1,23 @@
+{
+  "name": "requirator",
+  "description": "A minimal AMD library",
+  "main": "./lib/requirator.js",
+  "authors": [
+    "Tyler hoffman <tyler.c.hoffman@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "require",
+    "requirator"
+  ],
+  "homepage": "https://github.com/power-cosmic/requirator",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
